@@ -1,131 +1,133 @@
 *,
 *::before,
 *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 15px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 15px;
 }
 
 
 /* input & button */
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 5px;
-    max-width: 500px;
-    margin: 20px;
-    padding: 10px 0;
-    background: rgb(133, 186, 163);
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  max-width: 500px;
+  margin: 20px;
+  padding: 10px 0;
+  background: rgb(133, 186, 163);
 }
 
 h4 {
-    font-size: 25px;
-    text-align: center;
-    width: 100%;
-    margin: 10px;
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  margin: 10px;
 }
 
 .btn-add {
-    
-    border: 1px solid black;
-    border-radius: 5px;
-    width: 100%;
-    margin: 10px;
-    margin-right: calc(100% - 100px);
-    padding: 10px;
-    cursor: pointer;
+
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 100%;
+  margin: 10px;
+  margin-right: calc(100% - 100px);
+  padding: 10px;
+  cursor: pointer;
 }
 
 
 /* ToDo list */
 h1 {
-    width: 100%;
-    font-size: 20px;
-    margin: 10px 20px;
-    font-weight: normal;
+  width: 100%;
+  font-size: 20px;
+  margin: 10px 20px;
+  font-weight: normal;
 }
 
 .output {
-    width: 100%;
+  width: 100%;
 }
 
 .task-list {
-    display: flex;
-    font-size: 20px;
-    margin: 10px;
-    padding: 5px;
-    border: 1px solid rgb(0, 248, 12);
-    border-radius: 5px;
+  display: flex;
+  font-size: 20px;
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid rgb(0, 248, 12);
+  border-radius: 5px;
 }
 
 
 .task {
-    width: calc(76% - 10px);
-    font-size: 20px;
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 5px;
-    resize: none;
-    overflow-wrap: break-word;
+  width: calc(76% - 10px);
+  font-size: 20px;
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  resize: none;
+  overflow-wrap: break-word;
 
 }
 
 .btn-save,
 .btn-cancel {
-    max-height: 39px;
-    font-size: 16px;
-    padding: 3px;
-    border-radius: 5px;
-    border: 1px solid black;
-    margin: 3px;
-    cursor: pointer;
+  max-height: 39px;
+  font-size: 16px;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin: 3px;
+  cursor: pointer;
 }
 
 
 /* Menu */
 .btn-menu {
-    position: relative;
-    width: 25%;
-    align-self: center;
-    text-align: right;
-    margin-right: 5px;
-    border: none;
-    cursor: pointer;
+  position: relative;
+  width: 25%;
+  align-self: center;
+  text-align: right;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .menu-content {
-    line-height: 20px;
-    border: none;
-    visibility: hidden;
-    position: absolute;
-    top: 25px;
-    right: 10px;
-    width: 70px;
-    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    transition-duration: .2s;
+  line-height: 20px;
+  border: none;
+  visibility: hidden;
+  position: absolute;
+  top: 25px;
+  right: 10px;
+  width: 70px;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transition-duration: .2s;
 }
 
 .btn-menu:hover .menu-content {
-    visibility: visible;
+  visibility: visible;
 
 }
 
 .menu-content button {
-    width: 100%;
-    color: black;
-    padding: 5px;
+  width: 100%;
+  color: black;
+  padding: 5px;
 }
 
-.menu-content button:hover {background-color: #ddd;}
+.menu-content button:hover {
+  background-color: #ddd;
+}
 
 
 /* clear */
 .clear {
-    padding: 5px;
-    margin-left: 25px;
-    border-radius: 5px;
-    border: 1px solid black;
+  padding: 5px;
+  margin-left: 25px;
+  border-radius: 5px;
+  border: 1px solid black;
 }
