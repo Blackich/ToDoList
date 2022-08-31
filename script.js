@@ -8,13 +8,13 @@ function TodoTask(text) {
   this.done = false;
 }
 
-function setId(tasks) {
-  return tasks.length > 0
-    ? tasks.length
+function setId(task) {
+  return task.length > 0
+    ? task.length
     : 0;
 }
 
-function outputTemplate(tasks) {
+function outputTemplate() {
   return `
     <div class="task-list" id="${setId(tasks)}">
         <div class="task" contenteditable="true"></div>
@@ -44,9 +44,9 @@ function outputTemplateRender(btnSave, index) {
     </div>`;
 }
 
-function localRender(tasks) {
-  if (tasks.length > 0) {
-    tasks.forEach((btnSave, index) => {
+function localRender(task) {
+  if (task.length > 0) {
+    task.forEach((btnSave, index) => {
       output.insertAdjacentHTML('afterbegin', outputTemplateRender(btnSave, index));
     });
   }
@@ -67,14 +67,26 @@ btnAdd.addEventListener('click', () => {
 const btnsSave = document.getElementsByClassName('btn-save');
 document.addEventListener('click', (e) => {
   for (const btnSave of btnsSave) {
-    if (e.target !== btnSave) continue;
+    if (e.target === btnSave) {
+      if (!tasks[btnSave.parentElement.id]) {
+        if (btnSave.parentElement.firstElementChild.textContent) {
+          tasks.push(new TodoTask(btnSave.parentElement.firstElementChild.textContent));
+          updateLocal();
 
-    if (!tasks[btnSave.parentElement.id]) {
-      if (btnSave.parentElement.firstElementChild.textContent) {
-        tasks.push(new TodoTask(btnSave.parentElement.firstElementChild.textContent));
+          btnSave.parentElement.firstElementChild.textContent = tasks[btnSave.parentElement.id].text;
+          btnSave.parentElement.firstElementChild.contentEditable = false; // task
+          btnSave.parentElement.firstElementChild.style.border = 'hidden'; // task
+          btnSave.nextElementSibling.hidden = true; // btnCancel
+          btnSave.previousElementSibling.hidden = false; // btnMenu
+          btnSave.hidden = true;
+          btnAdd.disabled = false;
+        } else {
+          btnSave.parentElement.firstElementChild.focus();
+        }
+      } else if (btnSave.parentElement.firstElementChild.textContent) {
+        tasks[btnSave.parentElement.id].text = btnSave.parentElement.firstElementChild.textContent;
         updateLocal();
 
-        btnSave.parentElement.firstElementChild.textContent = tasks[btnSave.parentElement.id].text;
         btnSave.parentElement.firstElementChild.contentEditable = false; // task
         btnSave.parentElement.firstElementChild.style.border = 'hidden'; // task
         btnSave.nextElementSibling.hidden = true; // btnCancel
@@ -84,18 +96,6 @@ document.addEventListener('click', (e) => {
       } else {
         btnSave.parentElement.firstElementChild.focus();
       }
-    } else if (btnSave.parentElement.firstElementChild.textContent) {
-      tasks[btnSave.parentElement.id].text = btnSave.parentElement.firstElementChild.textContent;
-      updateLocal();
-
-      btnSave.parentElement.firstElementChild.contentEditable = false; // task
-      btnSave.parentElement.firstElementChild.style.border = 'hidden'; // task
-      btnSave.nextElementSibling.hidden = true; // btnCancel
-      btnSave.previousElementSibling.hidden = false; // btnMenu
-      btnSave.hidden = true;
-      btnAdd.disabled = false;
-    } else {
-      btnSave.parentElement.firstElementChild.focus();
     }
   }
 }); // <-- btnsSave
