@@ -21,11 +21,10 @@ function outputTemplate() {
         <div class="btn-menu" type="button" hidden>menu
             <div class="menu-content">
                 <button class="btn-delete">Delete</button>
-                <button class="btn-change">Edit</button>
+                <button class="btn-done">Done</button>
             </div>
         </div>
         <button class="btn-save">Save</button>
-        <button class="btn-cancel">Cancel</button>
     </div>`;
 }
 
@@ -36,11 +35,10 @@ function outputTemplateRender(btnSave, index) {
         <div class="btn-menu" type="button">menu
             <div class="menu-content">
                 <button class="btn-delete">Delete</button>
-                <button class="btn-change">Edit</button>
+                <button class="btn-done">Done</button>
             </div>
         </div>
         <button class="btn-save" hidden>Save</button>
-        <button class="btn-cancel" hidden>Cancel</button>
     </div>`;
 }
 
@@ -77,7 +75,6 @@ document.addEventListener('click', (e) => {
       btnSave.parentElement.firstElementChild.textContent = tasks[btnSave.parentElement.id].text;
       btnSave.parentElement.firstElementChild.contentEditable = false; // task
       btnSave.parentElement.firstElementChild.style.border = 'hidden'; // task
-      btnSave.nextElementSibling.hidden = true; // btnCancel
       btnSave.previousElementSibling.hidden = false; // btnMenu
       btnSave.hidden = true;
       btnAdd.disabled = false;
@@ -90,31 +87,11 @@ document.addEventListener('click', (e) => {
 
     btnSave.parentElement.firstElementChild.contentEditable = false; // task
     btnSave.parentElement.firstElementChild.style.border = 'hidden'; // task
-    btnSave.nextElementSibling.hidden = true; // btnCancel
     btnSave.previousElementSibling.hidden = false; // btnMenu
     btnSave.hidden = true;
     btnAdd.disabled = false;
   } else {
     btnSave.parentElement.firstElementChild.focus();
-  }
-});
-
-// btnCancel
-document.addEventListener('click', (e) => {
-  const btnCancel = e.target;
-  if (btnCancel.classList.value !== 'btn-cancel') return;
-
-  if (!tasks[btnCancel.parentElement.id]) {
-    output.removeChild(btnCancel.parentElement);
-    btnAdd.disabled = false;
-  } else {
-    btnCancel.parentElement.firstElementChild.textContent = tasks[btnCancel.parentElement.id].text;
-    btnCancel.parentElement.firstElementChild.contentEditable = false; // task
-    btnCancel.parentElement.firstElementChild.style.border = 'hidden'; // task
-    btnCancel.previousElementSibling.hidden = true; // btnSave
-    btnCancel.parentElement.children[1].hidden = false; // btnMenu
-    btnCancel.hidden = true;
-    btnAdd.disabled = false;
   }
 });
 
@@ -132,19 +109,35 @@ document.addEventListener('click', (e) => {
   output.removeChild(btnDelete.closest('.task-list'));
 });
 
-// btnEdit
+// taskEdit
 document.addEventListener('click', (e) => {
-  const btnChange = e.target;
-  if (btnChange.classList.value !== 'btn-change') return;
+  const divEdit = e.target;
+  if (divEdit.classList.value !== 'task') return;
 
-  const parentListBtnChange = btnChange.closest('.task-list');
-  btnChange.closest('.btn-menu').hidden = true;
+  divEdit.contentEditable = true; // task content
+  divEdit.style.border = '1px solid'; // task border
+  divEdit.parentElement.children[1].hidden = true; // btnMenu
+  divEdit.parentElement.children[2].hidden = false; // btnSave
+  divEdit.focus(); // task focus
+});
 
-  parentListBtnChange.firstElementChild.contentEditable = true; // task content
-  parentListBtnChange.firstElementChild.style.border = '1px solid'; // task border
-  parentListBtnChange.children[2].hidden = false; // btnSave
-  parentListBtnChange.lastElementChild.hidden = false; // btnCancel
-  parentListBtnChange.firstElementChild.focus(); // task focus
+// taskBlur
+document.addEventListener('focusout', (e) => {
+  const blurTask = e.target;
+  if (blurTask.classList.value !== 'task') return; // task
+  if (e.relatedTarget === blurTask.parentElement.children[2]) return; // btnSave
+
+  if (!tasks[blurTask.parentElement.id]) {
+    output.removeChild(blurTask.parentElement);
+    btnAdd.disabled = false;
+  } else {
+    blurTask.textContent = tasks[blurTask.parentElement.id].text;
+    blurTask.contentEditable = false; // task
+    blurTask.style.border = 'hidden'; // task
+    blurTask.parentElement.children[1].hidden = false; // btnMenu
+    blurTask.parentElement.children[2].hidden = true; // btnSave
+    btnAdd.disabled = false;
+  }
 });
 
 // clear Storage
