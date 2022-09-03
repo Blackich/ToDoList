@@ -155,14 +155,15 @@ document.addEventListener('click', (e) => {
 
   btnDone.closest('.task-list').classList.add('done');
 
+  const clone = btnDone.closest('.task-list').cloneNode(true);
   if (document.querySelectorAll('.task-list.done')[1]) {
-    document.querySelectorAll('.task-list.done')[1].before(btnDone.closest('.task-list').cloneNode(true));
+    document.querySelectorAll('.task-list.done')[1].before(clone);
   } else {
-    output.append(btnDone.closest('.task-list').cloneNode(true));
+    output.append(clone);
   }
 
   btnDone.closest('.task-list').remove();
-  document.querySelectorAll('.done').hidden = true;
+  clone.children[1].children[0].children[1].hidden = true; // btnDone
 });
 
 // clear Storage
