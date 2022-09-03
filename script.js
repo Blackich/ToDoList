@@ -30,12 +30,12 @@ function outputTemplate() {
 
 function outputTemplateRender(btnSave, index) {
   return `
-    <div class="task-list" id="${index}">
+    <div class="task-list ${(btnSave.done === true) ? 'done' : ''}" id="${index}">
         <div class="task" contenteditable="false" style="border: none">${btnSave.text}</div>
         <div class="btn-menu" type="button">menu
             <div class="menu-content">
                 <button class="btn-delete">Delete</button>
-                <button class="btn-done">Done</button>
+                <button class="btn-done" ${(btnSave.done === true) ? 'hidden' : ''}>Done</button>
             </div>
         </div>
         <button class="btn-save" hidden>Save</button>
@@ -44,8 +44,12 @@ function outputTemplateRender(btnSave, index) {
 
 function localRender(task) {
   if (task.length > 0) {
-    task.forEach((btnSave, index) => {
-      output.insertAdjacentHTML('afterbegin', outputTemplateRender(btnSave, index));
+    task.forEach((description, index) => {
+      if (description.done === true) {
+        output.insertAdjacentHTML('beforeend', outputTemplateRender(description, index));
+      } else {
+        output.insertAdjacentHTML('afterbegin', outputTemplateRender(description, index));
+      }
     });
   }
 }
@@ -119,6 +123,7 @@ document.addEventListener('click', (e) => {
   divEdit.parentElement.children[1].hidden = true; // btnMenu
   divEdit.parentElement.children[2].hidden = false; // btnSave
   divEdit.focus(); // task focus
+  btnAdd.disabled = true;
 });
 
 // taskBlur
@@ -138,6 +143,26 @@ document.addEventListener('focusout', (e) => {
     blurTask.parentElement.children[2].hidden = true; // btnSave
     btnAdd.disabled = false;
   }
+});
+
+// btnDone
+document.addEventListener('click', (e) => {
+  const btnDone = e.target;
+  if (btnDone.classList.value !== 'btn-done') return;
+
+  tasks[btnDone.closest('.task-list').id].done = true;
+  updateLocal();
+
+  btnDone.closest('.task-list').classList.add('done');
+
+  if (document.querySelectorAll('.task-list.done')[1]) {
+    document.querySelectorAll('.task-list.done')[1].before(btnDone.closest('.task-list').cloneNode(true));
+  } else {
+    output.append(btnDone.closest('.task-list').cloneNode(true));
+  }
+
+  btnDone.closest('.task-list').remove();
+  document.querySelectorAll('.done').hidden = true;
 });
 
 // clear Storage

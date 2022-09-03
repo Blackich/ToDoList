@@ -72,6 +72,10 @@ h1 {
 
 }
 
+.done {
+  background-color: rgba(128, 128, 128, 0.4);
+}
+
 .btn-save {
   max-height: 39px;
   font-size: 16px;
